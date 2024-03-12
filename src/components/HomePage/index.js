@@ -1,7 +1,7 @@
 import { getRecipes } from "../../store/recipes"
 import { useDispatch } from "react-redux"
 import { getIngredients } from '../../store/ingredients'
-import SearchPage from "../SearchPage"
+import SearchPage from "../SearchPage/index.js"
 
 function HomePage() {
     const dispatch = useDispatch()
@@ -9,7 +9,7 @@ function HomePage() {
     const searchParams = new URLSearchParams({
         q: 'chicken&peas&carrots'
     })
-    console.log(searchParams)
+    // console.log(searchParams)
     // console.log(process.env.REACT_APP_API_KEY, '----api key')
 
     const fetchTest = () => {

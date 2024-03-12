@@ -3,18 +3,26 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 function SearchPage() {
+//   let allIngredients = [...ingredientsData]
+  const [allIngredients, setAllIngredients] = useState([...ingredientsData])
   const [ingredientsShown, setIngredientsShown] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedIngredients, setSelectedIngredients] = [];
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
 
   useEffect(() => {}, [ingredientsShown]);
 
   const addIngredient = (ingredient) => {
+    // console.log(ingredient, '---ingredient in add ingredient')
+    console.log(selectedIngredients, '----selectedIngredients before trying to add it')
     const updatedIngredients = [...selectedIngredients, ingredient];
+    console.log(updatedIngredients, '---updatedIngredients')
     setSelectedIngredients(updatedIngredients);
-    ingredientsData = ingredientsData.filter(
+    console.log(selectedIngredients, '---selectedIngredients in add ingredient')
+    const updatedAllIngredients = allIngredients.filter(
       (currentIngredient) => ingredient !== currentIngredient
     );
+    setAllIngredients(updatedAllIngredients)
+
   };
 
   const removeIngredient = (ingredient) => {
@@ -25,7 +33,7 @@ function SearchPage() {
     ingredientsData = [...ingredientsData, ingredient];
   };
 
-  const ingredients = [];
+  const searchIngredients = [];
 
   for (let i = 0; i < ingredientsShown.length; i++) {
     const ingredient = ingredientsShown[i];
@@ -34,10 +42,10 @@ function SearchPage() {
         <p onClick={(e) => addIngredient(ingredient)}>{ingredient}</p>
       </li>
     );
-    ingredients.push(ingredient);
+    searchIngredients.push(ingredientElement);
   }
 
-  console.log(selectedIngredients, "----selectedIngredients");
+//   console.log(selectedIngredients, "----selectedIngredients");
 
   return (
     <div>
@@ -51,19 +59,16 @@ function SearchPage() {
               setIngredientsShown([]);
               setSearchTerm('')
             } else {
-              console.log("---onchange----");
-              console.log(e.target.value);
               setSearchTerm(e.target.value);
-              console.log(searchTerm, "----searchTerm");
               const filteredIngredients = ingredientsData.filter((ingredient) =>
-                ingredient.startsWith(searchTerm.toLowerCase())
+                ingredient.startsWith(e.target.value.toLowerCase())
               );
               setIngredientsShown(filteredIngredients);
-              console.log(filteredIngredients, "----filteredIngredients");
             }
           }}
         ></input>
-        <div>{ingredients}</div>
+        <div>{searchIngredients}</div>
+        <div></div>
       </form>
     </div>
   );
