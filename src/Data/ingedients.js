@@ -1,4 +1,4 @@
-const ingredientsArray = [
+export let ingredientsData = [
   "acorn squash",
   "adobo sauce",
   "agave nectar",
