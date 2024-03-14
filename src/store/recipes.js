@@ -45,9 +45,9 @@ export const getRecipes = (ingredients) => async (dispatch) => {
         dispatch(addRecipes(recipes))
         // return recipes
     } else {
-        const errors = await response.json()
-        console.log(errors)
-        // dispatch(setError)
+        const error = await response.json()
+        console.log(error)
+        dispatch(setError(error))
     }
 }
 
@@ -57,6 +57,9 @@ export const recipeReduce = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case ADD_RECIPES:
+            newState = [...action.payload]
+            return newState
+        case SET_ERROR:
             newState = [...action.payload]
             return newState
         default:
