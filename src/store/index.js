@@ -1,8 +1,10 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
+import { recipeReducer } from "./recipes";
 
 const rootReducer = combineReducers({
   // add reducer functions here
+  recipes: recipeReducer
 });
 
 let enhancer;
