@@ -53,7 +53,7 @@ export const getRecipes = (ingredients) => async (dispatch) => {
 
 const initialState = {}
 
-export const recipeReduce = (state = initialState, action) => {
+export const recipeReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case ADD_RECIPES:
