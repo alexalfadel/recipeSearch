@@ -14,7 +14,7 @@ function HomePage() {
 
     const fetchTest = () => {
         console.log('----fetchTestClicked')
-        // dispatch(getRecipes(searchParams))
+        dispatch(getRecipes(searchParams))
         dispatch(getIngredients())
     }
 

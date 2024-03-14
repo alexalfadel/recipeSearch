@@ -17,6 +17,18 @@ const setError = (error) => {
     }
 }
 
+function cleanRecipes(recipeResponse) {
+    return recipeResponse.hits.map(hit => {
+        const recipe = hit.recipe;
+        return {
+            image: recipe.image,
+            url: recipe.url,
+            ingredients: recipe.ingredients.map(ingredient => ingredient.food)
+        };
+    });
+}
+
+
 export const getRecipes = (ingredients) => async (dispatch) => {
     const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&${ingredients}&app_id=${process.env.REACT_APP_APP_ID}&app_key=${process.env.REACT_APP_APP_KEY}&field=image&field=source&field=url&field=ingredientLines&field=ingredients`, {
         method: 'GET',
@@ -26,8 +38,11 @@ export const getRecipes = (ingredients) => async (dispatch) => {
     })
 
     if (response.ok) {
-        const recipes = await response.json()
-        console.log(recipes)
+        const recipeResponse = await response.json()
+        // console.log(recipes)
+        const recipes = cleanRecipes(recipeResponse);
+        console.log(recipes, '-----recipes');
+        dispatch(addRecipes(recipes))
         // return recipes
     } else {
         const errors = await response.json()
@@ -36,3 +51,15 @@ export const getRecipes = (ingredients) => async (dispatch) => {
     }
 }
 
+const initialState = {}
+
+export const recipeReduce = (state = initialState, action) => {
+    let newState;
+    switch (action.type) {
+        case ADD_RECIPES:
+            newState = [...action.payload]
+            return newState
+        default:
+            return state
+    }
+}
