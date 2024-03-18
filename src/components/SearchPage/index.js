@@ -45,7 +45,17 @@ function SearchPage() {
     searchIngredients.push(ingredientElement);
   }
 
-//   console.log(selectedIngredients, "----selectedIngredients");
+  console.log(selectedIngredients, "----selectedIngredients");
+
+  const selectedIngredientsElements = selectedIngredients.forEach((ingredient) => {
+    return (
+      <li>{ingredient}</li>
+    )
+  })
+
+  const findRecipes = () => {
+    
+  }
 
   return (
     <div>
@@ -67,8 +77,10 @@ function SearchPage() {
             }
           }}
         ></input>
-        <div>{searchIngredients}</div>
-        <div></div>
+        <div>{selectedIngredients}</div>
+        <div>
+          <button>Find Recipes!</button>
+        </div>
       </form>
     </div>
   );
