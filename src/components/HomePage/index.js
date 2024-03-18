@@ -1,6 +1,6 @@
 import { getRecipes } from "../../store/recipes"
 import { useDispatch } from "react-redux"
-import { getIngredients } from '../../store/ingredients'
+// import { getIngredients } from '../../store/ingredients'
 import SearchPage from "../SearchPage/index.js"
 
 function HomePage() {
@@ -15,7 +15,7 @@ function HomePage() {
     const fetchTest = () => {
         console.log('----fetchTestClicked')
         dispatch(getRecipes(searchParams))
-        dispatch(getIngredients())
+        // dispatch(getIngredients())
     }
 
     console.log(process.env.REACT_APP_APP_ID)
