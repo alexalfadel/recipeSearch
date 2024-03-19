@@ -1,28 +1,31 @@
 import { ingredientsData } from "../../Data/ingedients";
 import { useState } from "react";
 import { useEffect } from "react";
+import { updateIngredients } from "../../store/ingredients";
+import { useDispatch } from "react-redux";
 
 function SearchPage() {
-//   let allIngredients = [...ingredientsData]
-  const [allIngredients, setAllIngredients] = useState([...ingredientsData])
+  //   let allIngredients = [...ingredientsData]
+  const dispatch = useDispatch();
+  const [allIngredients, setAllIngredients] = useState([...ingredientsData]);
   const [ingredientsShown, setIngredientsShown] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [searchIngredients, setSearchIngredients] = useState([]);
 
-  useEffect(() => {}, [ingredientsShown]);
+  useEffect(() => {}, [ingredientsShown, allIngredients, searchIngredients]);
 
   const addIngredient = (ingredient) => {
-    // console.log(ingredient, '---ingredient in add ingredient')
-    console.log(selectedIngredients, '----selectedIngredients before trying to add it')
     const updatedIngredients = [...selectedIngredients, ingredient];
-    console.log(updatedIngredients, '---updatedIngredients')
+
     setSelectedIngredients(updatedIngredients);
-    console.log(selectedIngredients, '---selectedIngredients in add ingredient')
+
     const updatedAllIngredients = allIngredients.filter(
       (currentIngredient) => ingredient !== currentIngredient
     );
-    setAllIngredients(updatedAllIngredients)
-
+    setAllIngredients(updatedAllIngredients);
+    updateSearchIngredients(ingredient);
+    setSearchTerm("");
   };
 
   const removeIngredient = (ingredient) => {
@@ -33,7 +36,24 @@ function SearchPage() {
     ingredientsData = [...ingredientsData, ingredient];
   };
 
-  const searchIngredients = [];
+  const updateSearchIngredients = (selectedIngredient) => {
+    const filteredIngredients = allIngredients.filter((ingredient) =>
+      ingredient.startsWith(selectedIngredient)
+    );
+    setIngredientsShown([]);
+
+    for (let i = 0; i < ingredientsShown.length; i++) {
+      const ingredient = ingredientsShown[i];
+      const ingredientElement = (
+        <li>
+          <p onClick={(e) => addIngredient(ingredient)}>{ingredient}</p>
+        </li>
+      );
+      searchIngredientsList.push(ingredientElement);
+    }
+  };
+
+  const searchIngredientsList = [];
 
   for (let i = 0; i < ingredientsShown.length; i++) {
     const ingredient = ingredientsShown[i];
@@ -42,20 +62,20 @@ function SearchPage() {
         <p onClick={(e) => addIngredient(ingredient)}>{ingredient}</p>
       </li>
     );
-    searchIngredients.push(ingredientElement);
+    searchIngredientsList.push(ingredientElement);
   }
 
-  console.log(selectedIngredients, "----selectedIngredients");
+  const selectedIngredientsElements = [];
 
-  const selectedIngredientsElements = selectedIngredients.forEach((ingredient) => {
-    return (
-      <li>{ingredient}</li>
-    )
-  })
+  for (let i = 0; i < selectedIngredients.length; i++) {
+    let ingredient = selectedIngredients[i];
+    let ingredientElement = <li>{ingredient}</li>;
+    selectedIngredientsElements.push(ingredientElement);
+  }
 
   const findRecipes = () => {
-    
-  }
+    dispatch(updateIngredients(selectedIngredients));
+  };
 
   return (
     <div>
@@ -67,17 +87,18 @@ function SearchPage() {
           onChange={(e) => {
             if (e.target.value.length === 0) {
               setIngredientsShown([]);
-              setSearchTerm('')
+              setSearchTerm("");
             } else {
               setSearchTerm(e.target.value);
-              const filteredIngredients = ingredientsData.filter((ingredient) =>
+              const filteredIngredients = allIngredients.filter((ingredient) =>
                 ingredient.startsWith(e.target.value.toLowerCase())
               );
               setIngredientsShown(filteredIngredients);
             }
           }}
         ></input>
-        <div>{selectedIngredients}</div>
+        <div>{searchIngredientsList}</div>
+        <div>{selectedIngredientsElements}</div>
         <div>
           <button>Find Recipes!</button>
         </div>
