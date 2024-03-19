@@ -24,33 +24,43 @@ function SearchPage() {
       (currentIngredient) => ingredient !== currentIngredient
     );
     setAllIngredients(updatedAllIngredients);
-    updateSearchIngredients(ingredient);
+    updateSearchIngredients(ingredient, true);
     setSearchTerm("");
   };
 
   const removeIngredient = (ingredient) => {
+    console.log(ingredient, '---ingredient in cabbage')
     const updatedIngredients = selectedIngredients.filter(
       (currentIngredient) => currentIngredient !== ingredient
     );
+    console.log(updatedIngredients, '---updatedIngredients in removeIngredient')
     setSelectedIngredients(updatedIngredients);
-    ingredientsData = [...ingredientsData, ingredient];
+    console.log(selectedIngredients, '----selectedIngredients')
+    // ingredientsData = [...ingredientsData, ingredient];
   };
 
-  const updateSearchIngredients = (selectedIngredient) => {
-    const filteredIngredients = allIngredients.filter((ingredient) =>
-      ingredient.startsWith(selectedIngredient)
-    );
-    setIngredientsShown([]);
-
-    for (let i = 0; i < ingredientsShown.length; i++) {
-      const ingredient = ingredientsShown[i];
-      const ingredientElement = (
-        <li>
-          <p onClick={(e) => addIngredient(ingredient)}>{ingredient}</p>
-        </li>
-      );
-      searchIngredientsList.push(ingredientElement);
+  const updateSearchIngredients = (selectedIngredient, action) => {
+    if (action) {
+      setIngredientsShown([]);
+    } else {
+      // const updatedSelectedIngredients = selectedIngredients.filter((ingredient) => ingredient !== selectedIngredient)
+      // setSelectedIngredients(updatedSelectedIngredients)
+      // const updatedIngredients = [...allIngredients, selectedIngredient]
     }
+    // const filteredIngredients = allIngredients.filter((ingredient) =>
+    //   ingredient.startsWith(selectedIngredient)
+    // );
+    // setIngredientsShown([]);
+
+    // for (let i = 0; i < ingredientsShown.length; i++) {
+    //   const ingredient = ingredientsShown[i];
+    //   const ingredientElement = (
+    //     <li>
+    //       <p onClick={(e) => addIngredient(ingredient)}>{ingredient}</p>
+    //     </li>
+    //   );
+    //   searchIngredientsList.push(ingredientElement);
+    // }
   };
 
   const searchIngredientsList = [];
@@ -67,9 +77,10 @@ function SearchPage() {
 
   const selectedIngredientsElements = [];
 
+
   for (let i = 0; i < selectedIngredients.length; i++) {
     let ingredient = selectedIngredients[i];
-    let ingredientElement = <li>{ingredient}</li>;
+    let ingredientElement = <li onClick={(() => removeIngredient(ingredient))}>{ingredient}</li>;
     selectedIngredientsElements.push(ingredientElement);
   }
 
