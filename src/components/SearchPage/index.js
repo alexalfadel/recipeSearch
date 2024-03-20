@@ -84,7 +84,8 @@ function SearchPage() {
     selectedIngredientsElements.push(ingredientElement);
   }
 
-  const findRecipes = () => {
+  const findRecipes = (e) => {
+    e.preventDefault()
     dispatch(updateIngredients(selectedIngredients));
   };
 
@@ -111,7 +112,7 @@ function SearchPage() {
         <div>{searchIngredientsList}</div>
         <div>{selectedIngredientsElements}</div>
         <div>
-          <button onClick={findRecipes}>Find Recipes!</button>
+          <button onClick={((e) => findRecipes(e))}>Find Recipes!</button>
         </div>
       </form>
     </div>

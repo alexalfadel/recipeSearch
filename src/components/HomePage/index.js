@@ -1,5 +1,6 @@
 import { getRecipes } from "../../store/recipes"
 import { useDispatch } from "react-redux"
+import RecipesPage from "../RecipesPage/index.js"
 // import { getIngredients } from '../../store/ingredients'
 import SearchPage from "../SearchPage/index.js"
 
@@ -25,6 +26,7 @@ function HomePage() {
             <button onClick={fetchTest}>Test Fetch</button>
             {/* <button onClick={fetchTest}> Test Ingredients</button> */}
             <SearchPage />
+            <RecipesPage />
         </div>
     )
 }

@@ -8,6 +8,8 @@ const addIngredients = (ingredients) => {
 }
 
 export const updateIngredients = (ingredients) => async (dispatch) => {
+    console.log('---in ingredients reducer---')
+    console.log(ingredients)
     dispatch(addIngredients(ingredients))
 }
 
