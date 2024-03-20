@@ -111,7 +111,7 @@ function SearchPage() {
         <div>{searchIngredientsList}</div>
         <div>{selectedIngredientsElements}</div>
         <div>
-          <button>Find Recipes!</button>
+          <button onClick={findRecipes}>Find Recipes!</button>
         </div>
       </form>
     </div>
