@@ -7,6 +7,7 @@ import SearchPage from "../SearchPage/index.js"
 function HomePage() {
     const dispatch = useDispatch()
 
+    console.log('homepage')
 
     return (
         <div>

@@ -9,6 +9,13 @@ function RecipesPage () {
     const ingredients = useSelector((state) => state.ingredients)
     const recipes = useSelector((state) => state.recipes)
 
+    
+
+    useEffect(() => {
+        const ingredientsParams = createSearchParams(ingredients)
+        dispatch(getRecipes(ingredientsParams))
+    }, [dispatch])
+
     const createSearchParams = (ingredients) => {
         let paramsString = ingredients.join('&')
         return new URLSearchParams({
@@ -16,11 +23,6 @@ function RecipesPage () {
         })
 
     }
-
-    useEffect(() => {
-        const ingredientsParams = createSearchParams(ingredients)
-        dispatch(getRecipes(ingredientsParams))
-    }, [dispatch])
     
     return (
         <div>

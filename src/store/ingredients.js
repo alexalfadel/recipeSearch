@@ -30,7 +30,7 @@ export const updateIngredients = (ingredients) => async (dispatch) => {
 //     }
 // }
 
-let initialState = {}
+let initialState = []
 
 export const ingredientReducer = (state = initialState, action) => {
     let newState;
