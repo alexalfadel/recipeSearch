@@ -13,17 +13,19 @@ function RecipesPage () {
 
     useEffect(() => {
         const ingredientsParams = createSearchParams(ingredients)
+        console.log('getting recipes')
         dispatch(getRecipes(ingredientsParams))
-    }, [dispatch])
+    }, [dispatch, ingredients])
 
     const createSearchParams = (ingredients) => {
         let paramsString = ingredients.join('&')
         return new URLSearchParams({
             q: paramsString
         })
-
     }
     
+    console.log(ingredients, '---ingredients on recipes page')
+    console.log(recipes, '---recipes on recipes page')
     return (
         <div>
             <h1>Recipes Page</h1>

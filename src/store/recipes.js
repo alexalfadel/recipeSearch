@@ -21,6 +21,7 @@ function cleanRecipes(recipeResponse) {
     return recipeResponse.hits.map(hit => {
         const recipe = hit.recipe;
         return {
+            name: recipe.label,
             image: recipe.image,
             url: recipe.url,
             ingredients: recipe.ingredients.map(ingredient => ingredient.food)
@@ -30,7 +31,7 @@ function cleanRecipes(recipeResponse) {
 
 
 export const getRecipes = (ingredients) => async (dispatch) => {
-    const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&${ingredients}&app_id=${process.env.REACT_APP_APP_ID}&app_key=${process.env.REACT_APP_APP_KEY}&field=image&field=source&field=url&field=ingredientLines&field=ingredients`, {
+    const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&${ingredients}&app_id=${process.env.REACT_APP_APP_ID}&app_key=${process.env.REACT_APP_APP_KEY}&field=image&field=source&field=url&field=ingredientLines&field=ingredients&field=label`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',  
