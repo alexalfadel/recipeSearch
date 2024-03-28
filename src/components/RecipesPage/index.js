@@ -23,12 +23,35 @@ function RecipesPage () {
             q: paramsString
         })
     }
+
+    if (!recipes.length) {
+        console.log('---no recipes :(----')
+        return <h1>Loading...</h1>
+    }
     
-    console.log(ingredients, '---ingredients on recipes page')
+    // const recipeBoxes = []
+
+    // for (let recipe of recipes) {
+    //     const recipeElement = <a href={recipe.url} target='_blank'><img src={recipe.image} alt={recipe.name}></img><p>{recipe.name}</p></a>
+    //     recipeBoxes.push(recipeElement)
+    // }
+    const recipeBoxes = recipes.map((recipe) => {
+        return (
+            <a href={recipe.url} target='_blank'>
+                <img src={recipe.image} alt={recipe.name}></img>
+                <p>{recipe.name}</p>
+            </a>
+        )
+    });
+
+    // console.log(ingredients, '---ingredients on recipes page')
     console.log(recipes, '---recipes on recipes page')
+    console.log(recipeBoxes, '---recipeBoxes')
+
     return (
         <div>
             <h1>Recipes Page</h1>
+            {recipeBoxes}
         </div>
     )
 }
