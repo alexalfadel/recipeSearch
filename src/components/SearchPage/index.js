@@ -122,6 +122,7 @@ function SearchPage() {
             {selectedIngredients.length > 0 && <div id='selected-ingredients-box'>{selectedIngredientsElements}</div>}
             <div>
               <button
+                id={`find-recipes-button-${selectedIngredients.length ? 'undisabled' : 'disabled'}`}
                 disabled={selectedIngredients.length ? false : true}
                 onClick={(e) => findRecipes(e)}
               >
