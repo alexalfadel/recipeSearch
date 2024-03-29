@@ -11,9 +11,9 @@ function HomePage() {
 
     return (
         <div>
-            <h1>Recipe HomePage</h1>
+            {/* <h1>Recipe HomePage</h1> */}
             <SearchPage />
-            <RecipesPage />
+            {/* <RecipesPage /> */}
         </div>
     )
 }
