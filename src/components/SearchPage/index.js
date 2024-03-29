@@ -4,16 +4,19 @@ import { useEffect } from "react";
 import { updateIngredients } from "../../store/ingredients";
 import { useDispatch } from "react-redux";
 import RecipesPage from "../RecipesPage";
+import "./searchPage.css";
 
 function SearchPage() {
   //   let allIngredients = [...ingredientsData]
   const dispatch = useDispatch();
-  const [allIngredients, setAllIngredients] = useState([...ingredientsData].sort());
+  const [allIngredients, setAllIngredients] = useState(
+    [...ingredientsData].sort()
+  );
   const [ingredientsShown, setIngredientsShown] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [searchIngredients, setSearchIngredients] = useState([]);
-  const [searchOrRecipe, setSearchOrRecipe] = useState('search')
+  const [searchOrRecipe, setSearchOrRecipe] = useState("search");
 
   useEffect(() => {}, [ingredientsShown, allIngredients, searchIngredients]);
 
@@ -31,7 +34,7 @@ function SearchPage() {
   };
 
   const removeIngredient = (ingredient) => {
-    console.log(ingredient, '---ingredient in cabbage')
+    console.log(ingredient, "---ingredient in cabbage");
     const updatedSelectedIngredients = selectedIngredients.filter(
       (currentIngredient) => currentIngredient !== ingredient
     );
@@ -39,32 +42,15 @@ function SearchPage() {
     setSelectedIngredients(updatedSelectedIngredients);
     // console.log(selectedIngredients, '----selectedIngredients')
     // ingredientsData = [...ingredientsData, ingredient];
-    const updatedAllIngredients = [...allIngredients, ingredient].sort()
-    setAllIngredients(updatedAllIngredients)
+    const updatedAllIngredients = [...allIngredients, ingredient].sort();
+    setAllIngredients(updatedAllIngredients);
   };
 
   const updateSearchIngredients = (selectedIngredient, action) => {
     if (action) {
       setIngredientsShown([]);
     } else {
-      // const updatedSelectedIngredients = selectedIngredients.filter((ingredient) => ingredient !== selectedIngredient)
-      // setSelectedIngredients(updatedSelectedIngredients)
-      // const updatedIngredients = [...allIngredients, selectedIngredient]
     }
-    // const filteredIngredients = allIngredients.filter((ingredient) =>
-    //   ingredient.startsWith(selectedIngredient)
-    // );
-    // setIngredientsShown([]);
-
-    // for (let i = 0; i < ingredientsShown.length; i++) {
-    //   const ingredient = ingredientsShown[i];
-    //   const ingredientElement = (
-    //     <li>
-    //       <p onClick={(e) => addIngredient(ingredient)}>{ingredient}</p>
-    //     </li>
-    //   );
-    //   searchIngredientsList.push(ingredientElement);
-    // }
   };
 
   const searchIngredientsList = [];
@@ -72,8 +58,8 @@ function SearchPage() {
   for (let i = 0; i < ingredientsShown.length; i++) {
     const ingredient = ingredientsShown[i];
     const ingredientElement = (
-      <li>
-        <p onClick={(e) => addIngredient(ingredient)}>{ingredient}</p>
+      <li className="search-ingredient" onClick={(e) => addIngredient(ingredient)}>
+        {ingredient}
       </li>
     );
     searchIngredientsList.push(ingredientElement);
@@ -81,86 +67,75 @@ function SearchPage() {
 
   const selectedIngredientsElements = [];
 
-
   for (let i = 0; i < selectedIngredients.length; i++) {
     let ingredient = selectedIngredients[i];
-    let ingredientElement = <li onClick={(() => removeIngredient(ingredient))}>{ingredient}</li>;
+    let ingredientElement = (
+      <li className='selected-ingredient' onClick={() => removeIngredient(ingredient)}>{ingredient}</li>
+    );
     selectedIngredientsElements.push(ingredientElement);
   }
 
   const findRecipes = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     dispatch(updateIngredients(selectedIngredients));
-    setSearchOrRecipe('recipe')
+    setSearchOrRecipe("recipe");
   };
 
   const reset = () => {
-    setAllIngredients([...ingredientsData].sort())
-    setIngredientsShown([])
-    setSearchTerm('')
-    setSelectedIngredients([])
-    setSearchIngredients([])
-    setSearchOrRecipe('search')
-  }
+    setAllIngredients([...ingredientsData].sort());
+    setIngredientsShown([]);
+    setSearchTerm("");
+    setSelectedIngredients([]);
+    setSearchIngredients([]);
+    setSearchOrRecipe("search");
+  };
 
-  console.log(selectedIngredients, '---selectedIngredients')
+  console.log(selectedIngredients, "---selectedIngredients");
   return (
-    <div>
-      {searchOrRecipe === 'search' && <div><h1>What's in your fridge?</h1>
-      <form>
-        <input
-          value={searchTerm}
-          placeholder="Search for your ingredients"
-          onChange={(e) => {
-            if (e.target.value.length === 0) {
-              setIngredientsShown([]);
-              setSearchTerm("");
-            } else {
-              setSearchTerm(e.target.value);
-              const filteredIngredients = allIngredients.filter((ingredient) =>
-                ingredient.startsWith(e.target.value.toLowerCase())
-              );
-              setIngredientsShown(filteredIngredients);
-            }
-          }}
-        ></input>
-        <div>{searchIngredientsList}</div>
-        <div>{selectedIngredientsElements}</div>
-        <div>
-          <button disabled={selectedIngredients.length ? false : true } onClick={((e) => findRecipes(e))}>Find Recipes!</button>
+    <div id="full-container">
+      {searchOrRecipe === "search" && (
+        <div className="search-module-container">
+          <h1 id="search-header">What's in your fridge?</h1>
+          <form id='search-form'>
+            <div id='search-box'>
+              <input
+                id="search-bar"
+                maxLength={35}
+                value={searchTerm}
+                placeholder="Search for your ingredients"
+                onChange={(e) => {
+                  if (e.target.value.length === 0) {
+                    setIngredientsShown([]);
+                    setSearchTerm("");
+                  } else {
+                    setSearchTerm(e.target.value);
+                    const filteredIngredients = allIngredients.filter(
+                      (ingredient) =>
+                        ingredient.startsWith(e.target.value.toLowerCase())
+                    );
+                    setIngredientsShown(filteredIngredients);
+                  }
+                }}
+              ></input>
+              <div id="search-ingredient-list">{searchIngredientsList}</div>
+            </div>
+            {selectedIngredients.length > 0 && <div id='selected-ingredients-box'>{selectedIngredientsElements}</div>}
+            <div>
+              <button
+                disabled={selectedIngredients.length ? false : true}
+                onClick={(e) => findRecipes(e)}
+              >
+                Find Recipes!
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
-      </div>
-} 
-{ searchOrRecipe === 'recipe' && <RecipesPage />}
-{ searchOrRecipe === 'recipe' && <button onClick={(() => reset())}>Search Again</button>}
-{/* <h1>What's in your fridge?</h1>
-      <form>
-        <input
-          value={searchTerm}
-          placeholder="Search for your ingredients"
-          onChange={(e) => {
-            if (e.target.value.length === 0) {
-              setIngredientsShown([]);
-              setSearchTerm("");
-            } else {
-              setSearchTerm(e.target.value);
-              const filteredIngredients = allIngredients.filter((ingredient) =>
-                ingredient.startsWith(e.target.value.toLowerCase())
-              );
-              setIngredientsShown(filteredIngredients);
-            }
-          }}
-        ></input>
-        <div>{searchIngredientsList}</div>
-        <div>{selectedIngredientsElements}</div>
-        <div>
-          <button disabled={selectedIngredients.length ? false : true } onClick={((e) => findRecipes(e))}>Find Recipes!</button>
-        </div>
-      </form>  */}
-
+      )}
+      {searchOrRecipe === "recipe" && <RecipesPage />}
+      {searchOrRecipe === "recipe" && (
+        <button onClick={() => reset()}>Search Again</button>
+      )}
     </div>
-        
   );
 }
 
