@@ -1,6 +1,5 @@
 import { ingredientsData } from "../../Data/ingedients";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { updateIngredients } from "../../store/ingredients";
 import { useDispatch } from "react-redux";
 import RecipesPage from "../RecipesPage";
@@ -8,7 +7,6 @@ import "./searchPage.css";
 import { getRecipes } from "../../store/recipes";
 
 function SearchPage() {
-  //   let allIngredients = [...ingredientsData]
   const dispatch = useDispatch();
   const [allIngredients, setAllIngredients] = useState(
     [...ingredientsData].sort()
@@ -19,7 +17,6 @@ function SearchPage() {
   const [searchIngredients, setSearchIngredients] = useState([]);
   const [searchOrRecipe, setSearchOrRecipe] = useState("search");
 
-  // useEffect(() => {}, [ingredientsShown, allIngredients, searchIngredients]);
 
   const addIngredient = (ingredient) => {
     const updatedIngredients = [...selectedIngredients, ingredient];
@@ -35,14 +32,10 @@ function SearchPage() {
   };
 
   const removeIngredient = (ingredient) => {
-    console.log(ingredient, "---ingredient in cabbage");
     const updatedSelectedIngredients = selectedIngredients.filter(
       (currentIngredient) => currentIngredient !== ingredient
     );
-    // console.log(updatedIngredients, '---updatedIngredients in removeIngredient')
     setSelectedIngredients(updatedSelectedIngredients);
-    // console.log(selectedIngredients, '----selectedIngredients')
-    // ingredientsData = [...ingredientsData, ingredient];
     const updatedAllIngredients = [...allIngredients, ingredient].sort();
     setAllIngredients(updatedAllIngredients);
   };
@@ -92,7 +85,6 @@ function SearchPage() {
     dispatch(getRecipes())
   };
 
-  console.log(selectedIngredients, "---selectedIngredients");
   return (
     <div id="full-container">
       {searchOrRecipe === "search" && (

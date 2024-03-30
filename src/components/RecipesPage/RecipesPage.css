@@ -12,7 +12,7 @@
 
 
 
-#recipes-page > h1, #no-recipes-title, #loading-page {
+#recipes-page > h1, #no-recipes-title, #loading-title {
     font-family: 'Rubik', sans-serif;
     font-size: 60px;
 }

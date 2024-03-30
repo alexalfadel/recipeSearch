@@ -1,10 +1,8 @@
 import './RecipesPage.css'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { getRecipes } from '../../store/recipes'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
 
 function RecipesPage () {
     const dispatch = useDispatch()
@@ -16,9 +14,7 @@ function RecipesPage () {
 
     useEffect(() => {
         const ingredientsParams = createSearchParams(ingredients)
-        console.log('getting recipes')
         dispatch(getRecipes(ingredientsParams)).then(() => setLoading(false))
-        // setLoading(false)
     }, [dispatch])
 
     const createSearchParams = (ingredients) => {
@@ -37,7 +33,6 @@ function RecipesPage () {
     }
 
     if (!recipes.length && !loading) {
-        console.log('---no recipes :(----')
         return (
             <div id='no-recipes-page'>
                 <h1 id='no-recipes-title'>No Recipes!</h1>
@@ -45,12 +40,7 @@ function RecipesPage () {
         )
     }
     
-    // const recipeBoxes = []
-
-    // for (let recipe of recipes) {
-    //     const recipeElement = <a href={recipe.url} target='_blank'><img src={recipe.image} alt={recipe.name}></img><p>{recipe.name}</p></a>
-    //     recipeBoxes.push(recipeElement)
-    // }
+   
     const recipeBoxes = recipes.map((recipe) => {
         return (
             <a className='recipe-box' href={recipe.url} target='_blank'>
@@ -60,9 +50,7 @@ function RecipesPage () {
         )
     });
 
-    // console.log(ingredients, '---ingredients on recipes page')
-    console.log(recipes, '---recipes on recipes page')
-    console.log(recipeBoxes, '---recipeBoxes')
+  
 
     return (
         <div id='recipes-page'>
