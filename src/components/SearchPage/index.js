@@ -19,7 +19,7 @@ function SearchPage() {
   const [searchIngredients, setSearchIngredients] = useState([]);
   const [searchOrRecipe, setSearchOrRecipe] = useState("search");
 
-  useEffect(() => {}, [ingredientsShown, allIngredients, searchIngredients]);
+  // useEffect(() => {}, [ingredientsShown, allIngredients, searchIngredients]);
 
   const addIngredient = (ingredient) => {
     const updatedIngredients = [...selectedIngredients, ingredient];

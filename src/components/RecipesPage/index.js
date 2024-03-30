@@ -17,8 +17,8 @@ function RecipesPage () {
     useEffect(() => {
         const ingredientsParams = createSearchParams(ingredients)
         console.log('getting recipes')
-        dispatch(getRecipes(ingredientsParams))
-        setLoading(false)
+        dispatch(getRecipes(ingredientsParams)).then(() => setLoading(false))
+        // setLoading(false)
     }, [dispatch])
 
     const createSearchParams = (ingredients) => {

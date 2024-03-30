@@ -44,7 +44,7 @@ export const getRecipes = (ingredients) => async (dispatch) => {
         const recipes = cleanRecipes(recipeResponse);
         console.log(recipes, '-----recipes');
         dispatch(addRecipes(recipes))
-        // return recipes
+        return recipes
     } else {
         const error = await response.json()
         console.log(error)
