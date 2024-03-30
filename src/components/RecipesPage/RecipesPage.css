@@ -1,0 +1,58 @@
+#recipes-page, #no-recipes-page, #loading-page {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+#no-recipes-page {
+    justify-content: center;
+}
+
+
+
+#recipes-page > h1, #no-recipes-title, #loading-page {
+    font-family: 'Rubik', sans-serif;
+    font-size: 60px;
+}
+
+#recipes-container {
+    box-sizing: border-box;
+    width: 80vw;
+    display: flex;
+    gap: 50px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.recipe-box {
+    box-sizing: border-box;
+    /* border: 2px solid black; */
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 0 5px 2px lightgrey;
+    text-decoration: none;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.recipe-box:hover {
+    cursor: pointer;
+    box-shadow: 0 0 5px 3px lightgrey;
+
+}
+
+
+
+.recipe-name {
+    font-family: 'Nunito', sans-serif;
+
+}
+
+#search-again-button {
+
+}

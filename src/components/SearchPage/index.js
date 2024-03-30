@@ -5,6 +5,7 @@ import { updateIngredients } from "../../store/ingredients";
 import { useDispatch } from "react-redux";
 import RecipesPage from "../RecipesPage";
 import "./searchPage.css";
+import { getRecipes } from "../../store/recipes";
 
 function SearchPage() {
   //   let allIngredients = [...ingredientsData]
@@ -88,6 +89,7 @@ function SearchPage() {
     setSelectedIngredients([]);
     setSearchIngredients([]);
     setSearchOrRecipe("search");
+    dispatch(getRecipes())
   };
 
   console.log(selectedIngredients, "---selectedIngredients");
@@ -133,9 +135,9 @@ function SearchPage() {
         </div>
       )}
       {searchOrRecipe === "recipe" && <RecipesPage />}
-      {searchOrRecipe === "recipe" && (
-        <button onClick={() => reset()}>Search Again</button>
-      )}
+      {searchOrRecipe === "recipe" && 
+        <button id='search-again-button' onClick={() => reset()}>Search Again</button>
+      }
     </div>
   );
 }

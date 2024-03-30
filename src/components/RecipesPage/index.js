@@ -3,11 +3,14 @@ import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { getRecipes } from '../../store/recipes'
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { useState } from 'react'
 
 function RecipesPage () {
     const dispatch = useDispatch()
     const ingredients = useSelector((state) => state.ingredients)
     const recipes = useSelector((state) => state.recipes)
+    const [loading, setLoading] = useState(true)
 
     
 
@@ -15,7 +18,8 @@ function RecipesPage () {
         const ingredientsParams = createSearchParams(ingredients)
         console.log('getting recipes')
         dispatch(getRecipes(ingredientsParams))
-    }, [dispatch, ingredients])
+        setLoading(false)
+    }, [dispatch])
 
     const createSearchParams = (ingredients) => {
         let paramsString = ingredients.join('&')
@@ -24,9 +28,21 @@ function RecipesPage () {
         })
     }
 
-    if (!recipes.length) {
+    if (loading && !recipes.length) {
+        return (
+            <div id='loading-page'>
+                <h1 id='loading-title'>We're looking... hang tight!</h1>
+            </div>
+        )
+    }
+
+    if (!recipes.length && !loading) {
         console.log('---no recipes :(----')
-        return <h1>Loading...</h1>
+        return (
+            <div id='no-recipes-page'>
+                <h1 id='no-recipes-title'>No Recipes!</h1>
+            </div>
+        )
     }
     
     // const recipeBoxes = []
@@ -37,9 +53,9 @@ function RecipesPage () {
     // }
     const recipeBoxes = recipes.map((recipe) => {
         return (
-            <a href={recipe.url} target='_blank'>
+            <a className='recipe-box' href={recipe.url} target='_blank'>
                 <img src={recipe.image} alt={recipe.name}></img>
-                <p>{recipe.name}</p>
+                <p className='recipe-name'>{recipe.name}</p>
             </a>
         )
     });
@@ -49,9 +65,11 @@ function RecipesPage () {
     console.log(recipeBoxes, '---recipeBoxes')
 
     return (
-        <div>
-            <h1>Recipes Page</h1>
-            {recipeBoxes}
+        <div id='recipes-page'>
+            <h1>Try these!</h1>
+            <div id='recipes-container'>
+                {recipeBoxes}
+            </div>
         </div>
     )
 }
